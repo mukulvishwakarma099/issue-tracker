@@ -32,18 +32,17 @@ const NewIssuePage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const onSubmit = () => {
-    handleSubmit(async (data) => {
-      try {
-        setIsSubmitting(true);
-        await axios.post("/api/issues", data);
-        router.push("/issues");
-      } catch (error) {
-        setError("An unexpected error occur.");
-        setIsSubmitting(false);
-      }
-    });
-  };
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      setIsSubmitting(true);
+      await axios.post("/api/issues", data);
+      router.push("/issues");
+      router.refresh();
+    } catch (error) {
+      setIsSubmitting(false);
+      setError("An unexpected error occur.");
+    }
+  });
 
   return (
     <div className="max-w-xl">
