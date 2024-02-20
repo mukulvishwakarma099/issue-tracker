@@ -1,7 +1,7 @@
 "use client";
 
 import { ErrorMessage, Spinner } from "@/app/components";
-import { createIssueSchema } from "@/app/validationSchema";
+import { issueSchema } from "@/app/validationSchema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, TextField } from "@radix-ui/themes";
@@ -17,7 +17,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
-type IssueFromData = z.infer<typeof createIssueSchema>;
+type IssueFromData = z.infer<typeof issueSchema>;
 
 const IssueFrom = ({ issue }: { issue?: Issue }) => {
   const {
@@ -26,7 +26,7 @@ const IssueFrom = ({ issue }: { issue?: Issue }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IssueFromData>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(issueSchema),
   });
 
   const [error, setError] = useState("");
@@ -37,7 +37,8 @@ const IssueFrom = ({ issue }: { issue?: Issue }) => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsSubmitting(true);
-      await axios.post("/api/issues", data);
+      if (issue) axios.patch(`/api/issues/${issue.id}`, data);
+      else await axios.post("/api/issues", data);
       router.push("/issues");
       router.refresh();
     } catch (error) {
@@ -76,7 +77,8 @@ const IssueFrom = ({ issue }: { issue?: Issue }) => {
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
         <Button disabled={isSubmitting}>
-          Submit new issue {isSubmitting && <Spinner />}
+          {issue ? "Update Issue" : "Create Issue"}{" "}
+          {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>
