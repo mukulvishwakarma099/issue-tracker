@@ -24,7 +24,7 @@ const IssueDetailPage = async ({ params }: IssueDetailPageProps) => {
         initial: "1",
         sm: "5",
       }}
-      gap="3"
+      gap="4"
     >
       <Box className="space-y-3 md:col-span-4">
         <IssueDetails issue={issue} />
