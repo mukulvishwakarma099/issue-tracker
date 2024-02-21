@@ -2,24 +2,21 @@
 
 import { ErrorMessage, Spinner } from "@/app/components";
 import { issueSchema } from "@/app/validationSchema";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Issue } from "@prisma/client";
 import { Button, Callout, TextField } from "@radix-ui/themes";
 import axios from "axios";
-import dynamic from "next/dynamic";
+import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { CiCircleInfo } from "react-icons/ci";
-import "easymde/dist/easymde.min.css";
-import { Issue } from "@prisma/client";
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-});
+import SimpleMdeReact from "react-simplemde-editor";
+import { z } from "zod";
 
 type IssueFromData = z.infer<typeof issueSchema>;
 
-const IssueFrom = ({ issue }: { issue?: Issue }) => {
+const IssueForm = ({ issue }: { issue?: Issue }) => {
   const {
     register,
     control,
@@ -71,7 +68,7 @@ const IssueFrom = ({ issue }: { issue?: Issue }) => {
           defaultValue={issue?.description}
           control={control}
           render={({ field }) => (
-            <SimpleMDE placeholder="Description" {...field} ref={null} />
+            <SimpleMdeReact placeholder="Description" {...field} ref={null} />
           )}
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
@@ -85,4 +82,4 @@ const IssueFrom = ({ issue }: { issue?: Issue }) => {
   );
 };
 
-export default IssueFrom;
+export default IssueForm;
