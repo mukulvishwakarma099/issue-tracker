@@ -46,13 +46,6 @@ const IssuesPage = async ({ searchParams }: IssuesPageProps) => {
                 )}
               </Table.ColumnHeaderCell>
             ))}
-            {/* <Table.ColumnHeaderCell>Issue</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className="hidden md:table-cell">
-              Status
-            </Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className="hidden md:table-cell">
-              Created
-            </Table.ColumnHeaderCell> */}
           </Table.Row>
         </Table.Header>
 
