@@ -41,7 +41,9 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
           </AlertDialog.Description>
           <Flex mt="4" gap="3">
             <AlertDialog.Cancel>
-              <Button color="gray">Cancel</Button>
+              <button className="bg-gray-400 text-white py-1 px-2 rounded-md font-medium">
+                Cancel
+              </button>
             </AlertDialog.Cancel>
             <AlertDialog.Action onClick={handleDelete}>
               <button className="bg-red-500 text-white py-1 px-2 rounded-md font-medium">
